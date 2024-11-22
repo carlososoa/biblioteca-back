@@ -12,14 +12,17 @@ const require = createRequire(import.meta.url)
 const cors = require('cors')
 const app = express()
 const port = process.env.PORT ?? 4000
+const url_front = process.env.URL_FRONT
 
 // implementamo cors, a través del middleware
-app.use(cors(
-/*   {
-    origin: 'https://biblioteca-front-psob.onrender.com', // Cambia esto a la URL de tu frontend
-    credentials: true
-  } */
-))
+const corsOptions = {
+  origin: `${url_front}`, // Reemplaza con el dominio de tu frontend
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Esto permite el envío de cookies
+  allowedHeaders: ['Content-Type', 'Authorization'] // Incluye los headers que necesitas
+}
+
+app.use(cors(corsOptions))
 app.use(morgan('dev'))
 
 app.use(express.json())
