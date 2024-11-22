@@ -6,6 +6,9 @@ const require = createRequire(import.meta.url)
 
 const jwt = require('jsonwebtoken')
 const secreto = process.env.SECRET_JWT_KEY
+const url_backend = process.env.URL_BACKEND
+const SameSite = process.env.SAME_SITE
+const Secure = process.env.SECURE
 
 export const login = async (req, res) => {
   try {
@@ -23,12 +26,12 @@ export const login = async (req, res) => {
         })
       res
         .cookie('access_token', token, {
-          domain: 'localhost',
+          domain: `${url_backend}`,
           path: '/',
           httpOnly: true,
           maxAge: 1000 * 60 * 60,
-          sameSite: 'lax',
-          secure: false
+          sameSite: `${SameSite}`,
+          secure: `${Secure}`
         })
         .set('Access-Control-Allow-Credentials', 'true')
         .status(200).json({ message: 'Usuario autenticado' })
