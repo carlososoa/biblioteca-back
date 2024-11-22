@@ -15,10 +15,10 @@ const port = process.env.PORT ?? 4000
 
 // implementamo cors, a través del middleware
 app.use(cors(
-  {
+/*   {
     origin: 'https://biblioteca-front-psob.onrender.com', // Cambia esto a la URL de tu frontend
     credentials: true
-  }
+  } */
 ))
 app.use(morgan('dev'))
 
