@@ -16,7 +16,7 @@ const port = process.env.PORT ?? 4000
 // implementamo cors, a través del middleware
 app.use(cors(
   {
-    origin: 'http://localhost:5173', // Cambia esto a la URL de tu frontend
+    origin: 'https://biblioteca-front-psob.onrender.com', // Cambia esto a la URL de tu frontend
     credentials: true
   }
 ))
