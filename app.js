@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import express from 'express'
 import 'dotenv/config'
 import userRoutes from './routes/userRoutes.js'
@@ -7,6 +8,10 @@ import { createRequire } from 'module'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import logoutRoutes from './routes/logoutRoutes.js'
+import bookRouter from './routes/bookRoutes.js'
+import generoRoutes from './routes/generoRoutes.js'
+import authorRoutes from './routes/authorRoutes.js'
+import editorialRoutes from './routes/editorialRoutes.js'
 const require = createRequire(import.meta.url)
 
 const cors = require('cors')
@@ -36,6 +41,10 @@ app.use('/api', userRoutes)
 app.use('/login', loginRoutes)
 app.use('/protegida', protectedRoutes)
 app.use('/logout', logoutRoutes)
+app.use('/libro', bookRouter)
+app.use('/genero', generoRoutes)
+app.use('/autor', authorRoutes)
+app.use('/editorial', editorialRoutes)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
