@@ -39,3 +39,24 @@ export const getUser = async (req, res) => {
     res.status(400).json({ error: err.message })
   }
 }
+export const getUserByUsername = async (req, res) => {
+  try {
+    const usuario = await User.findUserByUsernameNoPass(req.params)
+    res.status(200).json(usuario)
+  } catch (err) {
+    res.status(400).json({ error: err.message })
+  }
+}
+
+export const actualizarById = async (req, res) => {
+  try {
+    const userId = req.params.user_id
+    const body = req.body
+    console.log(userId, body)
+    // eslint-disable-next-line no-unused-vars
+    const usuario = await User.updateById(userId, body)
+    res.status(200).json({ message: 'Usuario actualizado' })
+  } catch (err) {
+    res.status(400).json({ error: err.message })
+  }
+}

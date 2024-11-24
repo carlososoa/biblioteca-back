@@ -52,4 +52,27 @@ export class User {
     })
     return (await results).rows
   }
+
+  static async updateById (id, data) {
+    // eslint-disable-next-line camelcase
+    const user_id = id
+    const { email, telefono, direccion } = data
+    const results = turso.execute({
+      sql: 'UPDATE users SET telefono = ?, direccion = ?, email = ? WHERE user_id = ?',
+      // eslint-disable-next-line camelcase
+      args: [telefono, direccion, email, user_id]
+    })
+    return (await results).rows
+  }
+
+  static async findUserByUsernameNoPass (data) {
+    // eslint-disable-next-line camelcase
+    const { username } = data
+    const results = turso.execute({
+      sql: 'SELECT user_id, username, email, direccion, telefono FROM users WHERE username LIKE ?',
+      // eslint-disable-next-line camelcase
+      args: [`%${username}%`]
+    })
+    return (await results).rows
+  }
 }
