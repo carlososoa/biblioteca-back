@@ -33,4 +33,11 @@ export class Book {
     const query = 'DELETE FROM libros WHERE libro_id = ?'
     await turso.execute({ sql: query, args: [libro_id] })
   }
+
+  static async cambioEstado (id, data) {
+    const libro_id = id
+    const estado = data
+    const query = 'UPDATE libros SET estado = ? WHERE libro_id = ?'
+    await turso.execute({ sql: query, args: [estado, libro_id] })
+  }
 }

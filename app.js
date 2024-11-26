@@ -12,6 +12,7 @@ import bookRouter from './routes/bookRoutes.js'
 import generoRoutes from './routes/generoRoutes.js'
 import authorRoutes from './routes/authorRoutes.js'
 import editorialRoutes from './routes/editorialRoutes.js'
+import prestamoRouter from './routes/prestamoRouter.js'
 const require = createRequire(import.meta.url)
 
 const cors = require('cors')
@@ -45,6 +46,7 @@ app.use('/libro', bookRouter)
 app.use('/genero', generoRoutes)
 app.use('/autor', authorRoutes)
 app.use('/editorial', editorialRoutes)
+app.use('/prestamo', prestamoRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
