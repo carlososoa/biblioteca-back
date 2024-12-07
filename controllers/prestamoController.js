@@ -75,3 +75,24 @@ export const deletePrestamo = async (req, res) => {
     res.status(500).json({ error: err.message })
   }
 }
+
+export const getAllPrestamosActivos = async (req, res) => {
+  try {
+    
+    const prestamos = await Prestamo.findAllActive()
+    res.status(200).json(prestamos)
+  } catch (err) {
+    
+    res.status(500).json({ error: err.message })
+  }
+}
+
+export const devolucionLibro = async (req, res) => {
+  try {
+    await Book.cambioEstado(req.body.libro_id,"Disponible")
+    await Prestamo.devolucion(req.params.id, req.body)
+    res.status(200).json({ message: 'Préstamo actualizado exitosamente' })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}

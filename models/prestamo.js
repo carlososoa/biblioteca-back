@@ -22,7 +22,7 @@ export class Prestamo {
 
   static async findAll () {
     const results = turso.execute({
-      sql: 'SELECT * FROM prestamos',
+      sql: 'SELECT p.*, u.username, l.titulo FROM prestamos p JOIN users u ON p.user_id = u.user_id JOIN libros l ON p.libro_id = l.libro_id',
       args: []
     })
     return (await results).rows
@@ -30,6 +30,7 @@ export class Prestamo {
 
   static async findPrestamoById (data) {
     const { prestamo_id } = data
+    console.log(prestamo_id)
     const results = turso.execute({
       sql: 'SELECT * FROM prestamos WHERE prestamo_id = ?',
       args: [prestamo_id]
@@ -70,6 +71,27 @@ export class Prestamo {
     const results = turso.execute({
       sql: 'DELETE FROM prestamos WHERE prestamo_id = ?',
       args: [prestamo_id]
+    })
+    return (await results).rows
+  }
+
+  static async findAllActive () {  
+    const estado = "Activo"    
+    const results = turso.execute({      
+      sql: 'SELECT prestamos.prestamo_id, users.username AS nombre_usuario, libros.titulo AS titulo_libro, prestamos.estado FROM prestamos JOIN users ON prestamos.user_id = users.user_id JOIN libros ON prestamos.libro_id = libros.libro_id WHERE prestamos.estado = ?',
+      args: [estado]
+    })
+    
+    return (await results).rows
+  }
+
+  static async devolucion (id, data) {
+    const prestamo_id = id
+    const {  multa, saldo, estado , observacion } = data
+    const fecha_fin = new Date()
+    const results = turso.execute({
+      sql: 'UPDATE prestamos SET fecha_fin = ?, multa = ?, saldo = ?, estado = ?, observacion = ? WHERE prestamo_id = ?',
+      args: [fecha_fin, multa, saldo, estado, observacion, prestamo_id ]
     })
     return (await results).rows
   }
